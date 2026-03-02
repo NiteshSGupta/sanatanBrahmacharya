@@ -1,11 +1,166 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ojas | Brahmacharya Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              saffron: {
+                50: "#fff8f1",
+                100: "#ffeedb",
+                500: "#f97316",
+                600: "#ea580c",
+                700: "#c2410c",
+                900: "#7c2d12",
+              },
+              sage: {
+                50: "#f4f5f4",
+                500: "#789b7b",
+                900: "#2d3b2e",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              serif: ["Merriweather", "Georgia", "serif"],
+            },
+            animation: {
+              breathe: "breathe 8s infinite ease-in-out",
+            },
+            keyframes: {
+              breathe: {
+                "0%, 100%": { transform: "scale(1)" },
+                "50%": { transform: "scale(1.5)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap");
 
-@push('styles')
-    <link rel="stylesheet" href="{{asset('frontend-assets/dincharyacss.css')}}">
-@endpush
+      body {
+        background-color: #fcfbf9;
+        color: #1a1a1a;
+      }
 
-@section('content')
-    <!-- Header -->
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.05),
+          0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      }
+
+      .milestone-glow {
+        animation: divineGlow 3s ease-out;
+      }
+
+      @keyframes divineGlow {
+        0% {
+          box-shadow: 0 0 0px rgba(249, 115, 22, 0);
+        }
+        50% {
+          box-shadow: 0 0 40px rgba(249, 115, 22, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 0px rgba(249, 115, 22, 0);
+        }
+      }
+      #circleWrapper:not(.aura-active) .particles,
+      #circleWrapper:not(.aura-active) .om-symbol {
+        opacity: 0.3;
+      }
+
+      /* Ripple Effect */
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(249, 115, 22, 0.3);
+        transform: scale(0);
+        animation: ripple-animation 600ms linear;
+        pointer-events: none;
+      }
+
+      @keyframes ripple-animation {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+
+      /* Page Fade */
+      .page-content {
+        transition: opacity 0.3s ease;
+      }
+
+      .page-hidden {
+        opacity: 0;
+      }
+
+      .sankalp-option.selected {
+        border-color: #f97316;
+        background: #fff8f1;
+      }
+
+      .duration-btn.active {
+        background-color: #f97316;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body
+    class="antialiased font-sans min-h-screen flex flex-col items-center pb-20"
+  >
+    <!-- Top Navigation -->
+    <nav
+      class="w-full max-w-2xl px-6 pt-[env(safe-area-inset-top)] py-4 flex justify-between items-center z-10 sticky top-0 bg-[#fcfbf9]/90 backdrop-blur-md mt-2"
+    >
+      <div class="flex items-center gap-2">
+        <!-- <i class="fa-solid fa-leaf text-saffron-600 text-xl"></i> -->
+        <div
+          class="w-12 h-12 bg-saffron-100 rounded-3xl flex items-center justify-center text-saffron-600"
+        >
+          <i class="fa-solid fa-om text-xl"></i>
+        </div>
+        <h1 class="text-xl font-bold tracking-tight text-saffron-900">
+          Brahmacharya
+        </h1>
+      </div>
+      <!-- <button
+        class="w-10 h-10 rounded-2xl glass-panel 
+        flex items-center justify-center 
+        text-saffron-600">
+            <i id="themeIcon" class="fa-solid fa-sun text-sm"></i>
+        </button>
+        <button
+        class="w-10 h-10 rounded-2xl glass-panel 
+        flex items-center justify-center" style="color:#111827;">
+            <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
+        </button> -->
+      <button
+        onclick="openSettings()"
+        class="text-gray-500 hover:text-saffron-700 transition"
+      >
+        <i class="fa-solid fa-gear text-lg"></i>
+      </button>
+    </nav>
+
+    <!-- Main Content -->
+    <!-- Dincharya Page -->
+    <main class="page-content w-full max-w-2xl px-4 flex flex-col gap-6 mt-4">
+      <!-- Header -->
       <section
         class="glass-panel rounded-3xl p-6 flex justify-between items-center"
       >
@@ -105,11 +260,104 @@
           You will receive check-in notification at selected time.
         </p>
       </section>
-@endsection
+    </main>
 
-@push('scripts')
-<script>
- // --- State Management (In-Memory for session) ---
+    <!-- Urge Surfer Modal (Emergency) -->
+    <div
+      id="urgeModal"
+      class="fixed inset-0 bg-gray-900/95 backdrop-blur-xl z-50 flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300"
+    >
+      <button
+        onclick="closeUrgeSurfer()"
+        class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="text-center px-6 max-w-md mx-auto flex flex-col items-center">
+        <h2 class="text-3xl font-bold text-white mb-2 font-serif">
+          Ride the Wave
+        </h2>
+        <p class="text-gray-400 mb-12">
+          An urge is just a sensation passing through. Do not fight it; observe
+          it. Breathe with the circle.
+        </p>
+
+        <!-- Breathing Animation -->
+        <div class="relative w-48 h-48 flex items-center justify-center mb-12">
+          <div
+            class="absolute w-32 h-32 bg-saffron-500/30 rounded-full animate-breathe blur-xl"
+          ></div>
+          <div
+            class="absolute w-24 h-24 bg-saffron-500 rounded-full shadow-[0_0_40px_rgba(249,115,22,0.5)] flex items-center justify-center z-10"
+          >
+            <span id="breatheText" class="text-white font-medium"
+              >Breathe In</span
+            >
+          </div>
+        </div>
+
+        <p class="text-gray-300 italic">
+          "You are not your thoughts. You are the consciousness observing them."
+        </p>
+      </div>
+    </div>
+
+    <!-- Settings / Reset Modal -->
+    <div
+      id="settingsModal"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300"
+    >
+      <div
+        class="bg-white rounded-3xl p-8 w-full max-w-sm mx-4 shadow-2xl transform scale-95 transition-transform duration-300"
+        id="settingsContent"
+      >
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-bold text-gray-800">Journey Settings</h3>
+          <button
+            onclick="closeSettings()"
+            class="text-gray-400 hover:text-gray-700"
+          >
+            <i class="fa-solid fa-xmark text-xl"></i>
+          </button>
+        </div>
+
+        <div class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Set Start Date & Time</label
+            >
+            <input
+              type="datetime-local"
+              id="startDateInput"
+              class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none"
+            />
+          </div>
+
+          <button
+            onclick="saveSettings()"
+            class="w-full bg-saffron-600 text-white font-semibold py-3 rounded-xl hover:bg-saffron-700 transition shadow-lg shadow-saffron-200"
+          >
+            Save Journey
+          </button>
+
+          <div class="pt-6 border-t border-gray-100">
+            <button
+              onclick="resetStreak()"
+              class="w-full bg-white text-red-600 border border-red-200 font-semibold py-3 rounded-xl hover:bg-red-50 transition"
+            >
+              I Relapsed (Reset to Now)
+            </button>
+            <p class="text-xs text-gray-400 text-center mt-3">
+              Do not be discouraged. A relapse is just a stumble on the path.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // --- State Management (In-Memory for session) ---
       let selectedSankalp = "";
       let selectedDays = 0;
 
@@ -165,21 +413,10 @@
         }, 250);
       }
 
-   window.addEventListener("load", () => {
-
-    const items = document.querySelectorAll(".nav-item");
-    const glow = document.getElementById("navGlow");
-
-    let activeIndex = 0;
-
-    items.forEach((item, index) => {
-        if (item.classList.contains("text-saffron-600")) {
-            activeIndex = index;
-        }
-    });
-
-    moveGlow(activeIndex);
-});
+      window.addEventListener("load", () => {
+        const firstTab = document.querySelector(".nav-item");
+        moveGlow(0);
+      });
 
       function openSankalp() {
         const modal = document.getElementById("sankalpModal");
@@ -238,8 +475,7 @@
 
         closeSankalp();
       }
-</script>
-
+    </script>
     <!-- Sankalp Modal -->
     <div
       id="sankalpModal"
@@ -347,4 +583,35 @@
         </button>
       </div>
     </div>
-@endpush
+   
+    <!-- Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 w-full z-40">
+      <div class="max-w-2xl mx-auto px-4 pb-[env(safe-area-inset-bottom)]">
+        <div
+          id="bottomNav"
+          class="glass-panel rounded-3xl mb-4 px-6 py-3 flex justify-around items-center shadow-xl border border-white/40 relative overflow-hidden"
+        >
+          <!-- Glow Indicator -->
+          <div
+            id="navGlow"
+            class="absolute bottom-0 h-1 bg-saffron-500 rounded-full transition-all duration-300 ease-out"
+          ></div>
+
+          <!-- Home -->
+         <a href="{{ route('home') }}"
+   class="nav-item flex flex-col items-center {{ request()->routeIs('home') ? 'text-saffron-600' : 'text-gray-400' }}">
+   <i class="fa-solid fa-house text-lg mb-1"></i>
+   <span class="text-xs">Home</span>
+</a>
+
+          <!-- Dincharya -->
+          <a href="{{ route('dincharya') }}"
+   class="nav-item flex flex-col items-center {{ request()->routeIs('dincharya') ? 'text-saffron-600' : 'text-gray-400' }}">
+   <i class="fa-solid fa-book-open text-lg mb-1"></i>
+   <span class="text-xs">Dincharya</span>
+</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,11 +1,283 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ojas | Brahmacharya Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              saffron: {
+                50: "#fff8f1",
+                100: "#ffeedb",
+                500: "#f97316",
+                600: "#ea580c",
+                700: "#c2410c",
+                900: "#7c2d12",
+              },
+              sage: {
+                50: "#f4f5f4",
+                500: "#789b7b",
+                900: "#2d3b2e",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              serif: ["Merriweather", "Georgia", "serif"],
+            },
+            animation: {
+              breathe: "breathe 8s infinite ease-in-out",
+            },
+            keyframes: {
+              breathe: {
+                "0%, 100%": { transform: "scale(1)" },
+                "50%": { transform: "scale(1.5)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap");
 
-@push('styles')
-    <link rel="stylesheet" href="{{asset('frontend-assets/homecss.css')}}">
-@endpush
+      body {
+        background-color: #fcfbf9;
+        color: #1a1a1a;
+      }
 
-@section('content')
-     <!-- Hero: Streak Counter -->
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.05),
+          0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      }
+
+      /* Circular Progress */
+      .progress-ring__circle {
+        transition: stroke-dashoffset 0.35s;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+      }
+
+      /* Hide scrollbar for clean UI */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      .aura {
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(249, 115, 22, 0.4) 0%,
+          rgba(249, 115, 22, 0.15) 40%,
+          transparent 70%
+        );
+        animation: auraSpread 4s infinite ease-out;
+        opacity: 0;
+      }
+
+      .aura-1 {
+        animation-delay: 0s;
+      }
+      .aura-2 {
+        animation-delay: 1.3s;
+      }
+      .aura-3 {
+        animation-delay: 2.6s;
+      }
+
+      @keyframes auraSpread {
+        0% {
+          transform: scale(0.8);
+          opacity: 0.6;
+        }
+        60% {
+          opacity: 0.3;
+        }
+        100% {
+          transform: scale(1.8);
+          opacity: 0;
+        }
+      }
+
+      #circleWrapper .aura {
+        display: none;
+      }
+
+      #circleWrapper.aura-active .aura {
+        display: block;
+      }
+      .particles {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        pointer-events: none;
+      }
+
+      .particles span {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: rgba(249, 180, 80, 0.6);
+        border-radius: 50%;
+        animation: floatParticle 12s infinite ease-in-out;
+      }
+
+      .particles span:nth-child(1) {
+        top: 20%;
+        left: 30%;
+        animation-delay: 0s;
+      }
+      .particles span:nth-child(2) {
+        top: 70%;
+        left: 60%;
+        animation-delay: 3s;
+      }
+      .particles span:nth-child(3) {
+        top: 40%;
+        left: 80%;
+        animation-delay: 6s;
+      }
+      .particles span:nth-child(4) {
+        top: 80%;
+        left: 20%;
+        animation-delay: 9s;
+      }
+
+      @keyframes floatParticle {
+        0% {
+          transform: translateY(0px);
+          opacity: 0.5;
+        }
+        50% {
+          transform: translateY(-15px);
+          opacity: 0.9;
+        }
+        100% {
+          transform: translateY(0px);
+          opacity: 0.5;
+        }
+      }
+
+      .om-symbol {
+        position: absolute;
+        font-size: 140px;
+        font-weight: 600;
+        color: rgba(249, 115, 22, 0.05);
+        animation: rotateOm 40s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes rotateOm {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .milestone-glow {
+        animation: divineGlow 3s ease-out;
+      }
+
+      @keyframes divineGlow {
+        0% {
+          box-shadow: 0 0 0px rgba(249, 115, 22, 0);
+        }
+        50% {
+          box-shadow: 0 0 40px rgba(249, 115, 22, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 0px rgba(249, 115, 22, 0);
+        }
+      }
+      #circleWrapper:not(.aura-active) .particles,
+      #circleWrapper:not(.aura-active) .om-symbol {
+        opacity: 0.3;
+      }
+
+      /* Ripple Effect */
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(249, 115, 22, 0.3);
+        transform: scale(0);
+        animation: ripple-animation 600ms linear;
+        pointer-events: none;
+      }
+
+      @keyframes ripple-animation {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+
+      /* Page Fade */
+      .page-content {
+        transition: opacity 0.3s ease;
+      }
+
+      .page-hidden {
+        opacity: 0;
+      }
+    </style>
+  </head>
+
+  <body
+    class="antialiased font-sans min-h-screen flex flex-col items-center pb-20"
+  >
+    <!-- Top Navigation -->
+    <nav
+      class="w-full max-w-2xl px-6 pt-[env(safe-area-inset-top)] py-4 flex justify-between items-center z-10 sticky top-0 bg-[#fcfbf9]/90 backdrop-blur-md mt-2"
+    >
+      <div class="flex items-center gap-2">
+        <!-- <i class="fa-solid fa-leaf text-saffron-600 text-xl"></i> -->
+        <div
+          class="w-12 h-12 bg-saffron-100 rounded-3xl flex items-center justify-center text-saffron-600"
+        >
+          <i class="fa-solid fa-om text-xl"></i>
+        </div>
+        <h1 class="text-xl font-bold tracking-tight text-saffron-900">
+          Brahmacharya
+        </h1>
+      </div>
+      <!-- <button
+        class="w-10 h-10 rounded-2xl glass-panel 
+        flex items-center justify-center 
+        text-saffron-600">
+            <i id="themeIcon" class="fa-solid fa-sun text-sm"></i>
+        </button>
+        <button
+        class="w-10 h-10 rounded-2xl glass-panel 
+        flex items-center justify-center" style="color:#111827;">
+            <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
+        </button> -->
+      <button
+        onclick="openSettings()"
+        class="text-gray-500 hover:text-saffron-700 transition"
+      >
+        <i class="fa-solid fa-gear text-lg"></i>
+      </button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="page-content w-full max-w-2xl px-4 flex flex-col gap-8 mt-4">
+      <!-- Hero: Streak Counter -->
       <section
         class="glass-panel rounded-3xl p-8 flex flex-col items-center relative overflow-hidden"
       >
@@ -243,9 +515,9 @@
           </div>
         </div>
       </section>
-@endsection
+    </main>
 
- <!-- Urge Surfer Modal (Emergency) -->
+    <!-- Urge Surfer Modal (Emergency) -->
     <div
       id="urgeModal"
       class="fixed inset-0 bg-gray-900/95 backdrop-blur-xl z-50 flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300"
@@ -339,9 +611,8 @@
       </div>
     </div>
 
-@push('scripts')
-<script>
-     // --- State Management (In-Memory for session) ---
+    <script>
+      // --- State Management (In-Memory for session) ---
       let journeyStart = null;
       let isJourneyStarted = false;
       let achievedMilestones = new Set();
@@ -789,24 +1060,13 @@
         }, 250);
       }
 
-    window.addEventListener("load", () => {
-
-    const items = document.querySelectorAll(".nav-item");
-    const glow = document.getElementById("navGlow");
-
-    let activeIndex = 0;
-
-    items.forEach((item, index) => {
-        if (item.classList.contains("text-saffron-600")) {
-            activeIndex = index;
-        }
-    });
-
-    moveGlow(activeIndex);
-});
-</script>
-
- <div
+      window.addEventListener("load", () => {
+        const firstTab = document.querySelector(".nav-item");
+        moveGlow(0);
+      });
+    </script>
+    <!-- Report Modal -->
+    <div
       id="reportModal"
       class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300"
     >
@@ -872,5 +1132,34 @@
       </div>
     </div>
     <!-- Bottom Navigation -->
+    <!-- Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 w-full z-40">
+      <div class="max-w-2xl mx-auto px-4 pb-[env(safe-area-inset-bottom)]">
+        <div
+          id="bottomNav"
+          class="glass-panel rounded-3xl mb-4 px-6 py-3 flex justify-around items-center shadow-xl border border-white/40 relative overflow-hidden"
+        >
+          <!-- Glow Indicator -->
+          <div
+            id="navGlow"
+            class="absolute bottom-0 h-1 bg-saffron-500 rounded-full transition-all duration-300 ease-out"
+          ></div>
 
-@endpush
+          <!-- Home -->
+        <a href="{{ route('home') }}"
+   class="nav-item flex flex-col items-center {{ request()->routeIs('home') ? 'text-saffron-600' : 'text-gray-400' }}">
+   <i class="fa-solid fa-house text-lg mb-1"></i>
+   <span class="text-xs">Home</span>
+</a>
+
+          <!-- Dincharya -->
+         <a href="{{ route('dincharya') }}"
+   class="nav-item flex flex-col items-center {{ request()->routeIs('dincharya') ? 'text-saffron-600' : 'text-gray-400' }}">
+   <i class="fa-solid fa-book-open text-lg mb-1"></i>
+   <span class="text-xs">Dincharya</span>
+</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

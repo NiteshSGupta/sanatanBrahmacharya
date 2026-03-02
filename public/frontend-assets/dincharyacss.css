@@ -1,0 +1,71 @@
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap");
+
+      body {
+        background-color: #fcfbf9;
+        color: #1a1a1a;
+      }
+
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.05),
+          0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      }
+
+      .milestone-glow {
+        animation: divineGlow 3s ease-out;
+      }
+
+      @keyframes divineGlow {
+        0% {
+          box-shadow: 0 0 0px rgba(249, 115, 22, 0);
+        }
+        50% {
+          box-shadow: 0 0 40px rgba(249, 115, 22, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 0px rgba(249, 115, 22, 0);
+        }
+      }
+      #circleWrapper:not(.aura-active) .particles,
+      #circleWrapper:not(.aura-active) .om-symbol {
+        opacity: 0.3;
+      }
+
+      /* Ripple Effect */
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(249, 115, 22, 0.3);
+        transform: scale(0);
+        animation: ripple-animation 600ms linear;
+        pointer-events: none;
+      }
+
+      @keyframes ripple-animation {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+
+      /* Page Fade */
+      .page-content {
+        transition: opacity 0.3s ease;
+      }
+
+      .page-hidden {
+        opacity: 0;
+      }
+
+      .sankalp-option.selected {
+        border-color: #f97316;
+        background: #fff8f1;
+      }
+
+      .duration-btn.active {
+        background-color: #f97316;
+        color: white;
+      }
