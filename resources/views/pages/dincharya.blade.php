@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ojas | Brahmacharya Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              saffron: {
+                50: "#fff8f1",
+                100: "#ffeedb",
+                500: "#f97316",
+                600: "#ea580c",
+                700: "#c2410c",
+                900: "#7c2d12",
+              },
+              sage: {
+                50: "#f4f5f4",
+                500: "#789b7b",
+                900: "#2d3b2e",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              serif: ["Merriweather", "Georgia", "serif"],
+            },
+            animation: {
+              breathe: "breathe 8s infinite ease-in-out",
+            },
+            keyframes: {
+              breathe: {
+                "0%, 100%": { transform: "scale(1)" },
+                "50%": { transform: "scale(1.5)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap");
+
+      body {
+        background-color: #fcfbf9;
+        color: #1a1a1a;
+      }
+
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.05),
+          0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      }
+
+      .milestone-glow {
+        animation: divineGlow 3s ease-out;
+      }
+
+      @keyframes divineGlow {
+        0% {
+          box-shadow: 0 0 0px rgba(249, 115, 22, 0);
+        }
+        50% {
+          box-shadow: 0 0 40px rgba(249, 115, 22, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 0px rgba(249, 115, 22, 0);
+        }
+      }
+      #circleWrapper:not(.aura-active) .particles,
+      #circleWrapper:not(.aura-active) .om-symbol {
+        opacity: 0.3;
+      }
+
+      /* Ripple Effect */
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(249, 115, 22, 0.3);
+        transform: scale(0);
+        animation: ripple-animation 600ms linear;
+        pointer-events: none;
+      }
+
+      @keyframes ripple-animation {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+
+      /* Page Fade */
+      .page-content {
+        transition: opacity 0.3s ease;
+      }
+
+      .page-hidden {
+        opacity: 0;
+      }
+
+      .sankalp-option.selected {
+        border-color: #f97316;
+        background: #fff8f1;
+      }
+
+      .duration-btn.active {
+        background-color: #f97316;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body
+    class="antialiased font-sans min-h-screen flex flex-col items-center pb-20"
+  >
+    <!-- Top Navigation -->
+    <nav
+      class="w-full max-w-2xl px-6 pt-[env(safe-area-inset-top)] py-4 flex justify-between items-center z-10 sticky top-0 bg-[#fcfbf9]/90 backdrop-blur-md mt-2"
+    >
+      <div class="flex items-center gap-2">
+        <!-- <i class="fa-solid fa-leaf text-saffron-600 text-xl"></i> -->
+        <div
+          class="w-12 h-12 bg-saffron-100 rounded-3xl flex items-center justify-center text-saffron-600"
+        >
+          <i class="fa-solid fa-om text-xl"></i>
+        </div>
+        <h1 class="text-xl font-bold tracking-tight text-saffron-900">
+          Brahmacharya
+        </h1>
+      </div>
+      <!-- <button
+        class="w-10 h-10 rounded-2xl glass-panel 
+        flex items-center justify-center 
+        text-saffron-600">
+            <i id="themeIcon" class="fa-solid fa-sun text-sm"></i>
+        </button>
+        <button
+        class="w-10 h-10 rounded-2xl glass-panel 
+        flex items-center justify-center" style="color:#111827;">
+            <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
+        </button> -->
+      <button
+        onclick="openSettings()"
+        class="text-gray-500 hover:text-saffron-700 transition"
+      >
+        <i class="fa-solid fa-gear text-lg"></i>
+      </button>
+    </nav>
+
+    <!-- Main Content -->
+    <!-- Dincharya Page -->
+    <main class="page-content w-full max-w-2xl px-4 flex flex-col gap-6 mt-4">
+      <!-- Header -->
+      <section
+        class="glass-panel rounded-3xl p-6 flex justify-between items-center"
+      >
+        <div>
+          <h2 class="text-xl font-bold text-saffron-900">Dincharya</h2>
+          <p class="text-sm text-gray-500">Daily Discipline & Sankalp</p>
+        </div>
+        <i class="fa-solid fa-book-open text-saffron-500 text-lg"></i>
+      </section>
+
+      <!-- Active Sankalp Card -->
+      <section class="glass-panel rounded-3xl p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Active Sankalp</h3>
+
+        <p class="text-gray-600 text-sm mb-3">No distraction after 10 PM</p>
+
+        <div class="flex justify-between text-xs text-gray-400 mb-4">
+          <span>Day 5 of 30</span>
+          <span>Ends: 12 March 2026</span>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-gray-100 rounded-full h-2">
+          <div class="bg-saffron-500 h-2 rounded-full" style="width: 20%"></div>
+        </div>
+      </section>
+
+      <!-- Create Sankalp Button -->
+      <button
+        onclick="openSankalp()"
+        class="bg-saffron-600 text-white py-3 rounded-2xl font-semibold shadow-lg shadow-saffron-200 hover:bg-saffron-700 transition"
+      >
+        + Create Your Sankalp
+      </button>
+
+      <!-- Daily Check-in Section -->
+      <section class="glass-panel rounded-3xl p-6">
+        <h3 class="text-lg font-semibold mb-4 text-gray-800">Daily Check-in</h3>
+
+        <div class="grid grid-cols-7 gap-3 text-center text-sm">
+          <label class="cursor-pointer">
+            <input type="checkbox" class="hidden peer" />
+            <div
+              class="py-3 rounded-xl bg-gray-100 peer-checked:bg-saffron-500 peer-checked:text-white transition"
+            >
+              1
+            </div>
+          </label>
+
+          <label class="cursor-pointer">
+            <input type="checkbox" class="hidden peer" />
+            <div
+              class="py-3 rounded-xl bg-gray-100 peer-checked:bg-saffron-500 peer-checked:text-white transition"
+            >
+              2
+            </div>
+          </label>
+
+          <!-- continue dynamically -->
+        </div>
+      </section>
+
+      <!-- Sankalp Analytics -->
+      <section class="glass-panel rounded-3xl p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">
+          Sankalp Analysis
+        </h3>
+
+        <div class="flex justify-between text-sm text-gray-600">
+          <div>
+            <p class="text-gray-400">Completion Rate</p>
+            <p class="text-xl font-bold text-saffron-600">80%</p>
+          </div>
+
+          <div>
+            <p class="text-gray-400">Missed Days</p>
+            <p class="text-xl font-bold text-red-500">2</p>
+          </div>
+
+          <div>
+            <p class="text-gray-400">Consistency</p>
+            <p class="text-xl font-bold text-saffron-600">Strong</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reminder Time -->
+      <section class="glass-panel rounded-3xl p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Daily Reminder</h3>
+
+        <input
+          type="time"
+          class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none"
+        />
+
+        <p class="text-xs text-gray-400 mt-2">
+          You will receive check-in notification at selected time.
+        </p>
+      </section>
+    </main>
+
+    <!-- Urge Surfer Modal (Emergency) -->
+    <div
+      id="urgeModal"
+      class="fixed inset-0 bg-gray-900/95 backdrop-blur-xl z-50 flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300"
+    >
+      <button
+        onclick="closeUrgeSurfer()"
+        class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="text-center px-6 max-w-md mx-auto flex flex-col items-center">
+        <h2 class="text-3xl font-bold text-white mb-2 font-serif">
+          Ride the Wave
+        </h2>
+        <p class="text-gray-400 mb-12">
+          An urge is just a sensation passing through. Do not fight it; observe
+          it. Breathe with the circle.
+        </p>
+
+        <!-- Breathing Animation -->
+        <div class="relative w-48 h-48 flex items-center justify-center mb-12">
+          <div
+            class="absolute w-32 h-32 bg-saffron-500/30 rounded-full animate-breathe blur-xl"
+          ></div>
+          <div
+            class="absolute w-24 h-24 bg-saffron-500 rounded-full shadow-[0_0_40px_rgba(249,115,22,0.5)] flex items-center justify-center z-10"
+          >
+            <span id="breatheText" class="text-white font-medium"
+              >Breathe In</span
+            >
+          </div>
+        </div>
+
+        <p class="text-gray-300 italic">
+          "You are not your thoughts. You are the consciousness observing them."
+        </p>
+      </div>
+    </div>
+
+    <!-- Settings / Reset Modal -->
+    <div
+      id="settingsModal"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300"
+    >
+      <div
+        class="bg-white rounded-3xl p-8 w-full max-w-sm mx-4 shadow-2xl transform scale-95 transition-transform duration-300"
+        id="settingsContent"
+      >
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-bold text-gray-800">Journey Settings</h3>
+          <button
+            onclick="closeSettings()"
+            class="text-gray-400 hover:text-gray-700"
+          >
+            <i class="fa-solid fa-xmark text-xl"></i>
+          </button>
+        </div>
+
+        <div class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Set Start Date & Time</label
+            >
+            <input
+              type="datetime-local"
+              id="startDateInput"
+              class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none"
+            />
+          </div>
+
+          <button
+            onclick="saveSettings()"
+            class="w-full bg-saffron-600 text-white font-semibold py-3 rounded-xl hover:bg-saffron-700 transition shadow-lg shadow-saffron-200"
+          >
+            Save Journey
+          </button>
+
+          <div class="pt-6 border-t border-gray-100">
+            <button
+              onclick="resetStreak()"
+              class="w-full bg-white text-red-600 border border-red-200 font-semibold py-3 rounded-xl hover:bg-red-50 transition"
+            >
+              I Relapsed (Reset to Now)
+            </button>
+            <p class="text-xs text-gray-400 text-center mt-3">
+              Do not be discouraged. A relapse is just a stumble on the path.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // --- State Management (In-Memory for session) ---
+      let selectedSankalp = "";
+      let selectedDays = 0;
+
+      function switchTab(el, page, e) {
+        const items = document.querySelectorAll(".nav-item");
+
+        items.forEach((btn) => {
+          btn.classList.remove("text-saffron-600");
+          btn.classList.add("text-gray-400");
+        });
+
+        el.classList.remove("text-gray-400");
+        el.classList.add("text-saffron-600");
+
+        const index = Array.from(items).indexOf(el);
+
+        moveGlow(index);
+
+        triggerRipple(e, el);
+
+        if (navigator.vibrate) navigator.vibrate(30);
+
+        fadePage(page);
+      }
+      function moveGlow(index) {
+        const glow = document.getElementById("navGlow");
+        const totalTabs = document.querySelectorAll(".nav-item").length;
+
+        const widthPercent = 100 / totalTabs;
+        glow.style.width = widthPercent + "%";
+        glow.style.left = widthPercent * index + "%";
+      }
+      function triggerRipple(event, el) {
+        const circle = document.createElement("span");
+        circle.classList.add("ripple");
+
+        const rect = el.getBoundingClientRect();
+        circle.style.left = `${event.clientX - rect.left}px`;
+        circle.style.top = `${event.clientY - rect.top}px`;
+
+        el.appendChild(circle);
+
+        setTimeout(() => circle.remove(), 600);
+      }
+      function fadePage(page) {
+        const main = document.querySelector(".page-content");
+
+        main.classList.add("page-hidden");
+
+        setTimeout(() => {
+          // Here you can swap sections in future
+          main.classList.remove("page-hidden");
+        }, 250);
+      }
+
+      window.addEventListener("load", () => {
+        const firstTab = document.querySelector(".nav-item");
+        moveGlow(0);
+      });
+
+      function openSankalp() {
+        const modal = document.getElementById("sankalpModal");
+        const content = document.getElementById("sankalpContent");
+        modal.style.display = "flex";
+        setTimeout(() => {
+          modal.style.opacity = "1";
+          content.style.transform = "scale(1)";
+        }, 10);
+      }
+
+      function closeSankalp() {
+        const modal = document.getElementById("sankalpModal");
+        const content = document.getElementById("sankalpContent");
+        modal.style.opacity = "0";
+        content.style.transform = "scale(0.95)";
+        setTimeout(() => {
+          modal.style.display = "none";
+        }, 300);
+      }
+
+      function selectSankalp(el) {
+        document.querySelectorAll(".sankalp-option").forEach((btn) => {
+          btn.classList.remove("selected");
+        });
+        el.classList.add("selected");
+        selectedSankalp = el.innerText;
+        document.getElementById("customSankalp").value = "";
+      }
+
+      function selectDuration(el, days) {
+        document.querySelectorAll(".duration-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+        el.classList.add("active");
+        selectedDays = days;
+      }
+
+      function sealSankalp() {
+        const custom = document.getElementById("customSankalp").value;
+        const finalSankalp = custom || selectedSankalp;
+
+        if (!finalSankalp || selectedDays === 0) {
+          alert("Please select a sankalp and duration.");
+          return;
+        }
+
+        localStorage.setItem(
+          "ojas_sankalp",
+          JSON.stringify({
+            title: finalSankalp,
+            days: selectedDays,
+            start: new Date(),
+          }),
+        );
+
+        closeSankalp();
+      }
+    </script>
+    <!-- Sankalp Modal -->
+    <div
+      id="sankalpModal"
+      class="fixed inset-0 bg-black/40 backdrop-blur-md z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center px-6"
+    >
+      <div
+        id="sankalpContent"
+        class="glass-panel rounded-3xl w-full max-w-md p-8 relative transform scale-95 transition-all duration-300"
+      >
+        <!-- Close -->
+        <button
+          onclick="closeSankalp()"
+          class="absolute top-4 right-4 text-gray-400 hover:text-saffron-600 transition"
+        >
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+
+        <!-- Header -->
+        <div class="text-center mb-8">
+          <div
+            class="w-14 h-14 bg-saffron-100 rounded-3xl flex items-center justify-center mx-auto mb-4 text-saffron-600"
+          >
+            <i class="fa-solid fa-scroll text-lg"></i>
+          </div>
+          <h2 class="text-xl font-bold text-gray-800">Take a Sankalp</h2>
+          <p class="text-xs text-gray-500 uppercase tracking-widest mt-1">
+            Intentional Discipline
+          </p>
+        </div>
+
+        <!-- Predefined Options -->
+        <div class="space-y-3 mb-6">
+          <button
+            onclick="selectSankalp(this)"
+            class="sankalp-option w-full text-left px-4 py-3 rounded-2xl glass-panel text-gray-700 hover:border-saffron-500 border border-transparent transition"
+          >
+            📿 Naam Jap (108 times)
+          </button>
+
+          <button
+            onclick="selectSankalp(this)"
+            class="sankalp-option w-full text-left px-4 py-3 rounded-2xl glass-panel text-gray-700 hover:border-saffron-500 border border-transparent transition"
+          >
+            🌅 Wake in Brahma Muhurta
+          </button>
+
+          <button
+            onclick="selectSankalp(this)"
+            class="sankalp-option w-full text-left px-4 py-3 rounded-2xl glass-panel text-gray-700 hover:border-saffron-500 border border-transparent transition"
+          >
+            📵 Digital Fast After 8 PM
+          </button>
+        </div>
+
+        <!-- Custom Input -->
+        <div class="mb-6">
+          <input
+            type="text"
+            id="customSankalp"
+            placeholder="Or write your own sankalp..."
+            class="w-full border-b border-gray-300 focus:border-saffron-500 outline-none py-2 text-gray-800 bg-transparent"
+          />
+        </div>
+
+        <!-- Duration -->
+        <div class="mb-6">
+          <h4 class="text-xs uppercase tracking-widest text-gray-400 mb-3">
+            Duration
+          </h4>
+
+          <div class="grid grid-cols-4 gap-2">
+            <button
+              onclick="selectDuration(this, 7)"
+              class="duration-btn glass-panel py-2 rounded-xl text-sm"
+            >
+              7D
+            </button>
+            <button
+              onclick="selectDuration(this, 21)"
+              class="duration-btn glass-panel py-2 rounded-xl text-sm"
+            >
+              21D
+            </button>
+            <button
+              onclick="selectDuration(this, 40)"
+              class="duration-btn glass-panel py-2 rounded-xl text-sm"
+            >
+              40D
+            </button>
+            <button
+              onclick="selectDuration(this, 90)"
+              class="duration-btn glass-panel py-2 rounded-xl text-sm"
+            >
+              90D
+            </button>
+          </div>
+        </div>
+
+        <!-- Seal Button -->
+        <button
+          onclick="sealSankalp()"
+          class="w-full bg-saffron-600 text-white font-semibold py-3 rounded-2xl shadow-lg shadow-saffron-200 hover:bg-saffron-700 transition"
+        >
+          Seal My Sankalp
+        </button>
+      </div>
+    </div>
+   
+    <!-- Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 w-full z-40">
+      <div class="max-w-2xl mx-auto px-4 pb-[env(safe-area-inset-bottom)]">
+        <div
+          id="bottomNav"
+          class="glass-panel rounded-3xl mb-4 px-6 py-3 flex justify-around items-center shadow-xl border border-white/40 relative overflow-hidden"
+        >
+          <!-- Glow Indicator -->
+          <div
+            id="navGlow"
+            class="absolute bottom-0 h-1 bg-saffron-500 rounded-full transition-all duration-300 ease-out"
+          ></div>
+
+          <!-- Home -->
+          <button
+            class="nav-item relative flex flex-col items-center text-saffron-600 font-medium"
+            onclick="switchTab(this, 'home', event)"
+          >
+            <i class="fa-solid fa-house text-lg mb-1"></i>
+            <span class="text-xs">Home</span>
+          </button>
+
+          <!-- Dincharya -->
+          <button
+            class="nav-item relative flex flex-col items-center text-gray-400 font-medium"
+            onclick="switchTab(this, 'dincharya', event)"
+          >
+            <i class="fa-solid fa-book-open text-lg mb-1"></i>
+            <span class="text-xs">Dincharya</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
