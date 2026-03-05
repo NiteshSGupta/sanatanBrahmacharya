@@ -323,23 +323,6 @@
         </div>
 
         <div class="space-y-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Set Start Date & Time</label
-            >
-            <input
-              type="datetime-local"
-              id="startDateInput"
-              class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none"
-            />
-          </div>
-
-          <button
-            onclick="saveSettings()"
-            class="w-full bg-saffron-600 text-white font-semibold py-3 rounded-xl hover:bg-saffron-700 transition shadow-lg shadow-saffron-200"
-          >
-            Save Journey
-          </button>
 
           <div class="pt-6 border-t border-gray-100">
             <button

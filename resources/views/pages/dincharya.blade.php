@@ -107,11 +107,60 @@
       </section>
 @endsection
 
+    <!-- Settings / Reset Modal -->
+    <div
+      id="settingsModal"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300"
+    >
+      <div
+        class="bg-white rounded-3xl p-8 w-full max-w-sm mx-4 shadow-2xl transform scale-95 transition-transform duration-300"
+        id="settingsContent"
+      >
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-bold text-gray-800">Journey Settings</h3>
+          <button
+            onclick="closeSettings()"
+            class="text-gray-400 hover:text-gray-700"
+          >
+            <i class="fa-solid fa-xmark text-xl"></i>
+          </button>
+        </div>
+
+        <div class="space-y-6">
+          <div class="pt-6 border-t border-gray-100">
+
+            <a href="{{ route('login') }}"
+            class="w-full block text-center bg-white text-red-600 border border-red-200 font-semibold py-3 rounded-xl hover:bg-red-50 transition">
+                Login
+            </a>
+            <a href="{{ route('registration') }}"
+            class="w-full block text-center bg-white text-red-600 border border-red-200 font-semibold py-3 rounded-xl hover:bg-red-50 transition mt-3">
+                Registration
+            </a>
+
+            <p class="text-xs text-gray-400 text-center mt-3">
+              Do not be discouraged. A relapse is just a stumble on the path.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
 @push('scripts')
 <script>
  // --- State Management (In-Memory for session) ---
       let selectedSankalp = "";
       let selectedDays = 0;
+
+        function closeSettings() {
+        const modal = document.getElementById("settingsModal");
+        const content = document.getElementById("settingsContent");
+        modal.style.opacity = "0";
+        content.style.transform = "scale(0.95)";
+        setTimeout(() => {
+          modal.style.display = "none";
+        }, 300);
+      }
 
       function switchTab(el, page, e) {
         const items = document.querySelectorAll(".nav-item");
