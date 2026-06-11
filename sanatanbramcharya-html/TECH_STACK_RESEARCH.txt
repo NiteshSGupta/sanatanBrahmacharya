@@ -1,0 +1,43 @@
+Sanatan Brahmacharya - Technical Architecture Research
+===================================================
+
+GOAL: 
+Build an ultra-fast, "no-reload" Single Page Application (SPA) using a native PHP/Laravel stack that supports continuous state (timers ticking, audio playing) without interrupting the premium UI during navigation.
+
+---------------------------------------------------
+OPTION 1: Inertia.js + Vue 3 (THE GOLD STANDARD)
+---------------------------------------------------
+*Overview:* Uses Laravel for backend routing/data, but the entire frontend is powered by Vue.js. 
+
+*Pros:*
+- True SPA Performance: Once the initial Javascript loads, clicking between pages has 0ms delay. It feels exactly like a downloaded mobile app.
+- Persistent State: We can use a "Persistent Layout" to keep the Streak Timer and Sacred Audio running uninterrupted while the user switches between the Home and Dincharya tabs.
+- Premium Animations: Vue handles complex entering/leaving page transitions natively and effortlessly.
+- Future Proof: The absolute best structure if we ever want to convert this into a cross-platform mobile app (React Native / Capacitor) or Desktop App (NativePHP).
+
+*Cons:*
+- Learning Curve: Requires writing the UI in Vue components rather than pure HTML/Blade.
+- Refactoring: We will need to convert our existing `h1.html` and `dincharya.html` into `.vue` files.
+
+---------------------------------------------------
+OPTION 2: Laravel Livewire 3 + Alpine.js (THE FULL-STACK PHP APPROACH)
+---------------------------------------------------
+*Overview:* You write standard HTML/PHP in Blade files. Livewire intercepts clicks to make it behave like an SPA without reloading the browser.
+
+*Pros:*
+- Development Speed: We can take the exact HTML we already wrote and drop it directly into the project with almost zero changes.
+- `@persist` Directive: Livewire 3 allows us to wrap the timer and audio in a `@persist` tag. When navigating, the rest of the page morphs, but the timer/audio stays perfectly alive.
+- Pure PHP: No need to learn or configure a heavy Javascript framework. Alpine.js handles the small interactive bits (like the Urge Surfer modal).
+
+*Cons:*
+- Network Dependent: It relies slightly more on server requests (AJAX) to swap HTML chunks. While it pre-fetches links to feel instant, it is technically a fraction of a second slower than a pure Vue app on bad connections.
+
+---------------------------------------------------
+THE VERDICT / RECOMMENDATION
+---------------------------------------------------
+If the absolute highest-tier performance, flawless state management (audio/timers), and a premium "native app" feel are the top priorities: 
+👉 CHOOSE OPTION 1 (Inertia.js + Vue 3). 
+It is the undisputed king of raw frontend performance for Laravel apps.
+
+If development speed and keeping the project strictly within PHP/Blade is preferred while still getting 95% of SPA performance:
+👉 CHOOSE OPTION 2 (Livewire 3 + Alpine.js).

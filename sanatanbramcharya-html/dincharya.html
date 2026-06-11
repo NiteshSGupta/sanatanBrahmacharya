@@ -262,99 +262,6 @@
       </section>
     </main>
 
-    <!-- Urge Surfer Modal (Emergency) -->
-    <div
-      id="urgeModal"
-      class="fixed inset-0 bg-gray-900/95 backdrop-blur-xl z-50 flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300"
-    >
-      <button
-        onclick="closeUrgeSurfer()"
-        class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl"
-      >
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
-      <div class="text-center px-6 max-w-md mx-auto flex flex-col items-center">
-        <h2 class="text-3xl font-bold text-white mb-2 font-serif">
-          Ride the Wave
-        </h2>
-        <p class="text-gray-400 mb-12">
-          An urge is just a sensation passing through. Do not fight it; observe
-          it. Breathe with the circle.
-        </p>
-
-        <!-- Breathing Animation -->
-        <div class="relative w-48 h-48 flex items-center justify-center mb-12">
-          <div
-            class="absolute w-32 h-32 bg-saffron-500/30 rounded-full animate-breathe blur-xl"
-          ></div>
-          <div
-            class="absolute w-24 h-24 bg-saffron-500 rounded-full shadow-[0_0_40px_rgba(249,115,22,0.5)] flex items-center justify-center z-10"
-          >
-            <span id="breatheText" class="text-white font-medium"
-              >Breathe In</span
-            >
-          </div>
-        </div>
-
-        <p class="text-gray-300 italic">
-          "You are not your thoughts. You are the consciousness observing them."
-        </p>
-      </div>
-    </div>
-
-    <!-- Settings / Reset Modal -->
-    <div
-      id="settingsModal"
-      class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300"
-    >
-      <div
-        class="bg-white rounded-3xl p-8 w-full max-w-sm mx-4 shadow-2xl transform scale-95 transition-transform duration-300"
-        id="settingsContent"
-      >
-        <div class="flex justify-between items-center mb-6">
-          <h3 class="text-xl font-bold text-gray-800">Journey Settings</h3>
-          <button
-            onclick="closeSettings()"
-            class="text-gray-400 hover:text-gray-700"
-          >
-            <i class="fa-solid fa-xmark text-xl"></i>
-          </button>
-        </div>
-
-        <div class="space-y-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Set Start Date & Time</label
-            >
-            <input
-              type="datetime-local"
-              id="startDateInput"
-              class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none"
-            />
-          </div>
-
-          <button
-            onclick="saveSettings()"
-            class="w-full bg-saffron-600 text-white font-semibold py-3 rounded-xl hover:bg-saffron-700 transition shadow-lg shadow-saffron-200"
-          >
-            Save Journey
-          </button>
-
-          <div class="pt-6 border-t border-gray-100">
-            <button
-              onclick="resetStreak()"
-              class="w-full bg-white text-red-600 border border-red-200 font-semibold py-3 rounded-xl hover:bg-red-50 transition"
-            >
-              I Relapsed (Reset to Now)
-            </button>
-            <p class="text-xs text-gray-400 text-center mt-3">
-              Do not be discouraged. A relapse is just a stumble on the path.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <script>
       // --- State Management (In-Memory for session) ---
@@ -414,8 +321,7 @@
       }
 
       window.addEventListener("load", () => {
-        const firstTab = document.querySelector(".nav-item");
-        moveGlow(0);
+        moveGlow(1);
       });
 
       function openSankalp() {
@@ -599,7 +505,7 @@
 
           <!-- Home -->
           <button
-            class="nav-item relative flex flex-col items-center text-saffron-600 font-medium"
+            class="nav-item relative flex flex-col items-center text-gray-400 font-medium"
             onclick="switchTab(this, 'home', event)"
           >
             <i class="fa-solid fa-house text-lg mb-1"></i>
@@ -608,7 +514,7 @@
 
           <!-- Dincharya -->
           <button
-            class="nav-item relative flex flex-col items-center text-gray-400 font-medium"
+            class="nav-item relative flex flex-col items-center text-saffron-600 font-medium"
             onclick="switchTab(this, 'dincharya', event)"
           >
             <i class="fa-solid fa-book-open text-lg mb-1"></i>
