@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Ojas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              saffron: {
+                100: "#ffeedb",
+                500: "#f97316",
+                600: "#ea580c",
+                900: "#7c2d12",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        background-color: #fcfbf9;
+      }
+
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.05),
+          0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      }
+
+      .om-symbol {
+        position: absolute;
+        font-size: 220px;
+        color: rgba(249, 115, 22, 0.05);
+        animation: rotateOm 50s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes rotateOm {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen flex items-center justify-center px-6 relative">
+    <!-- Subtle OM Background -->
+    <div class="om-symbol">ॐ</div>
+
+    <!-- Login Card -->
+    <div class="glass-panel w-full max-w-md rounded-3xl p-10 relative z-10">
+      <!-- Logo / Heading -->
+      <div class="text-center mb-8">
+        <div
+          class="w-14 h-14 bg-saffron-100 rounded-3xl flex items-center justify-center mx-auto text-saffron-600 mb-4"
+        >
+          <i class="fa-solid fa-om text-2xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-saffron-900 tracking-tight">
+          Welcome Back
+        </h1>
+        <p class="text-gray-500 text-sm mt-2">
+          Continue your Brahmacharya journey
+        </p>
+      </div>
+
+      <!-- Login Form -->
+      <form class="space-y-6">
+        <!-- Name Field -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Name
+          </label>
+          <div class="relative">
+            <i
+              class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+            ></i>
+            <input
+              type="text"
+              placeholder="Enter your name"
+              class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition"
+            />
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Password
+          </label>
+          <div class="relative">
+            <i
+              class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+            ></i>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition"
+            />
+          </div>
+        </div>
+
+        <!-- Login Button -->
+        <button
+          type="submit"
+          class="w-full bg-saffron-600 text-white font-semibold py-3 rounded-xl hover:bg-saffron-700 transition shadow-lg shadow-saffron-200"
+        >
+          Enter
+        </button>
+      </form>
+
+      <!-- Footer -->
+      <p class="text-xs text-gray-400 text-center mt-8">
+        Discipline builds power. Power builds character.
+      </p>
+    </div>
+  </body>
+</html>

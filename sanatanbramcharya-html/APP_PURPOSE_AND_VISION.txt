@@ -1,0 +1,39 @@
+App Name: Sanatan Brahmacharya
+
+===========================================
+1. PURPOSE AND VISION
+===========================================
+This application is created with a noble vision to help the younger generation, particularly Hindu men in India, to cultivate discipline and break free from the harmful addiction to masturbation. The modern world is flooded with distractions, and this app aims to serve as a digital companion that helps users maintain a strong "Brahmacharya" (celibacy/discipline) lifestyle.
+
+The app's core mission is to guide users toward a healthier, more focused, and disciplined life by tracking their progress and managing their "Dincharya" (daily routine).
+
+===========================================
+2. CORE FEATURES
+===========================================
+- Fast & Premium UI: The application is designed to have a superfast, visually appealing, and premium user interface.
+- Counting & Award System: A gamified tracking system where users earn awards and progress through different "Leagues" based on their streaks and consistency.
+- Dincharya (Daily Routine) Tracker: 
+    - Users can add pre-existing tasks or create custom daily tasks.
+    - A calendar view allows users to check off completed tasks.
+    - Comprehensive progress tracking with Weekly, Monthly, and Yearly reports.
+
+===========================================
+3. PRICING & BUSINESS MODEL
+===========================================
+- 100% Free: No subscriptions, no hidden charges.
+- Ad-Free Experience: There will be no advertisements to ensure a distraction-free environment for the users.
+- Donation-Based: In the future, the application will run entirely on voluntary donations to cover server and maintenance costs.
+
+===========================================
+4. FUTURE OUTREACH & GROWTH
+===========================================
+To maximize the reach and positive impact of this application across India, there are plans to approach organizations such as:
+- VHP (Vishwa Hindu Parishad)
+- Bajrang Dal
+- RSS (Rashtriya Swayamsevak Sangh)
+Their support will be instrumental in spreading awareness about the app and its benefits among the target demographic.
+
+===========================================
+5. TARGET AUDIENCE
+===========================================
+Primarily built for Indians, specifically targeting Hindu men who are looking to embrace discipline, follow a structured Dincharya, and lead a focused life guided by traditional values.

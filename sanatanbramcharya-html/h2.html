@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#0B1220">
+<title>OJAS — Self Mastery Lab</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                lab: '#0B1220',
+                surface: '#111827',
+                royal: '#5B21B6',
+                spiritual: '#F59E0B',
+            },
+            animation: {
+                breathe: 'breathe 8s infinite ease-in-out',
+                pulseSoft: 'pulseSoft 6s infinite ease-in-out'
+            },
+            keyframes: {
+                breathe: {
+                    '0%,100%': { transform: 'scale(0.95)' },
+                    '50%': { transform: 'scale(1.15)' }
+                },
+                pulseSoft: {
+                    '0%,100%': { opacity: '0.9' },
+                    '50%': { opacity: '1' }
+                }
+            }
+        }
+    }
+}
+</script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Merriweather:wght@400&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background:
+        radial-gradient(circle at 15% 15%, rgba(91,33,182,0.08), transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(245,158,11,0.05), transparent 40%),
+        #0B1220;
+    color: #F9FAFB;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.glass {
+    background: rgba(17, 24, 39, 0.75);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.progress-ring__circle {
+    transition: stroke-dashoffset 0.4s ease;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+</style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+
+<!-- Header -->
+<header class="w-full max-w-xl px-6 py-6 flex justify-between items-center">
+    <div>
+        <p class="text-[10px] uppercase tracking-[0.25em] text-gray-500">OJAS</p>
+        <p class="text-xs tracking-widest text-gray-400">Self Mastery Lab</p>
+    </div>
+    <button class="text-gray-500 hover:text-spiritual transition">
+        <i class="fa-solid fa-sliders text-sm"></i>
+    </button>
+</header>
+
+<!-- Main -->
+<main class="w-full max-w-xl px-6 flex flex-col items-center">
+
+<!-- Streak Circle -->
+<section class="relative mt-6 flex flex-col items-center">
+
+<div class="relative w-56 h-56 flex items-center justify-center">
+
+    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 120 120">
+        <circle stroke-width="4" cx="60" cy="60" r="54"
+            class="text-gray-700/40 stroke-current"
+            fill="transparent"></circle>
+
+        <circle id="progressRing"
+            stroke-width="4"
+            stroke-linecap="round"
+            cx="60"
+            cy="60"
+            r="54"
+            fill="transparent"
+            class="progress-ring__circle stroke-[url(#grad)]"></circle>
+
+        <defs>
+            <linearGradient id="grad">
+                <stop offset="0%" stop-color="#5B21B6"/>
+                <stop offset="100%" stop-color="#F59E0B"/>
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <div class="text-center animate-pulseSoft">
+        <div id="dayCount" class="text-5xl font-semibold tracking-tight">12</div>
+        <div class="text-xs tracking-widest text-gray-400 mt-1">Days of Alignment</div>
+    </div>
+
+</div>
+
+</section>
+
+<!-- Metrics -->
+<section class="w-full mt-10 grid grid-cols-3 gap-4 text-center">
+
+<div class="glass rounded-2xl py-4">
+    <div class="text-sm font-medium">48</div>
+    <div class="text-[10px] uppercase tracking-widest text-gray-500">Longest</div>
+</div>
+
+<div class="glass rounded-2xl py-4">
+    <div class="text-sm font-medium">134</div>
+    <div class="text-[10px] uppercase tracking-widest text-gray-500">Total Days</div>
+</div>
+
+<div class="glass rounded-2xl py-4">
+    <div class="text-sm font-medium">82%</div>
+    <div class="text-[10px] uppercase tracking-widest text-gray-500">Discipline</div>
+</div>
+
+</section>
+
+<!-- Actions -->
+<section class="w-full mt-10 space-y-4">
+
+<button onclick="openEmergency()"
+class="w-full glass py-4 rounded-2xl text-sm tracking-widest font-medium
+hover:border-spiritual transition">
+Observe the Urge
+</button>
+
+<button onclick="resetStreak()"
+class="w-full py-3 text-xs uppercase tracking-widest text-gray-500 hover:text-spiritual transition">
+Restart Discipline
+</button>
+
+</section>
+
+<!-- Reflection -->
+<section class="w-full mt-12 glass rounded-2xl p-6">
+
+<p class="text-[10px] uppercase tracking-[0.3em] text-gray-500 mb-4">Today’s Reflection</p>
+
+<p class="font-serif text-sm leading-relaxed text-gray-300">
+“He who conquers himself is the mightiest warrior.”
+</p>
+
+<p class="text-xs text-spiritual mt-4 tracking-widest uppercase">
+Bhagavad Gita
+</p>
+
+</section>
+
+</main>
+
+<!-- Emergency Mode -->
+<div id="emergencyOverlay"
+class="fixed inset-0 bg-black/95 backdrop-blur-xl hidden flex-col items-center justify-center transition-opacity duration-300">
+
+<button onclick="closeEmergency()" class="absolute top-6 right-6 text-gray-500 hover:text-white">
+<i class="fa-solid fa-xmark text-xl"></i>
+</button>
+
+<div class="flex flex-col items-center text-center px-8">
+
+<div class="relative w-40 h-40 flex items-center justify-center mb-10">
+    <div class="absolute w-32 h-32 rounded-full bg-spiritual/20 blur-2xl"></div>
+    <div class="w-24 h-24 rounded-full bg-royal breath-core animate-breathe shadow-[0_0_60px_rgba(245,158,11,0.25)] flex items-center justify-center">
+        <span id="breathText" class="text-sm tracking-widest text-white">Inhale</span>
+    </div>
+</div>
+
+<p class="text-gray-400 text-sm max-w-xs leading-relaxed">
+Observe the sensation. Do not react. The wave will pass.
+</p>
+
+</div>
+
+</div>
+
+<script>
+const circle = document.getElementById('progressRing');
+const radius = 54;
+const circumference = 2 * Math.PI * radius;
+
+circle.style.strokeDasharray = circumference;
+circle.style.strokeDashoffset = circumference;
+
+function setProgress(percent) {
+    const offset = circumference - percent / 100 * circumference;
+    circle.style.strokeDashoffset = offset;
+}
+
+setProgress(40); // Example progress
+
+// Emergency Mode
+let breatheCycle = 0;
+let breatheInterval;
+
+function openEmergency() {
+    const overlay = document.getElementById('emergencyOverlay');
+    overlay.style.display = 'flex';
+    breatheInterval = setInterval(() => {
+        breatheCycle = (breatheCycle + 1) % 2;
+        document.getElementById('breathText').innerText =
+            breatheCycle === 0 ? 'Inhale' : 'Exhale';
+    }, 4000);
+}
+
+function closeEmergency() {
+    const overlay = document.getElementById('emergencyOverlay');
+    overlay.style.display = 'none';
+    clearInterval(breatheInterval);
+}
+
+function resetStreak() {
+    alert('Streak reset logic here.');
+}
+</script>
+
+</body>
+</html>

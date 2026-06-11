@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Lab | Brahmacharya Journey</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lab: '#0B1220',
+                        surface: '#111827',
+                        royal: '#5B21B6',
+                        spiritual: '#F59E0B',
+                        soft: '#9CA3AF'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Merriweather', 'Georgia', 'serif'],
+                    },
+                    animation: {
+                        'breathe': 'breathe 8s infinite ease-in-out',
+                    },
+                    keyframes: {
+                        breathe: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.5)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap');
+        
+        body {
+            background: radial-gradient(circle at top center, #111827 0%, #0B1220 60%);
+            color: #E5E7EB;
+        }
+
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        ::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+
+<body class="antialiased font-sans min-h-screen flex flex-col items-center pb-20">
+
+<!-- NAV -->
+<nav class="w-full max-w-2xl px-6 pt-[env(safe-area-inset-top)] py-4 
+flex justify-between items-center sticky top-0 
+bg-lab/80 backdrop-blur-xl border-b border-white/5 mt-2 z-10">
+
+    <div class="flex items-center gap-2">
+        <div class="w-12 h-12 bg-royal/20 rounded-3xl flex items-center justify-center 
+                    text-spiritual shadow-lg shadow-royal/30">
+            <i class="fa-solid fa-om text-xl"></i>
+        </div>
+        <h1 class="text-xl font-bold tracking-tight text-white">Brahmacharya</h1>
+    </div>
+
+    <button onclick="openSettings()" class="text-soft hover:text-white transition">
+        <i class="fa-solid fa-gear text-lg"></i>
+    </button>
+</nav>
+
+<!-- MAIN -->
+<main class="w-full max-w-2xl px-4 flex flex-col gap-8 mt-4">
+
+<!-- STREAK -->
+<section class="glass-panel rounded-3xl p-8 flex flex-col items-center relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-royal to-spiritual"></div>
+    
+    <h2 class="text-sm font-medium text-soft uppercase tracking-widest mb-6">Current Streak</h2>
+    
+    <div class="relative w-64 h-64 flex items-center justify-center">
+        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 120 120">
+            <circle class="text-white/10 stroke-current" stroke-width="4"
+                cx="60" cy="60" r="54" fill="transparent"></circle>
+
+            <circle id="progressRing"
+                class="text-spiritual stroke-current progress-ring__circle"
+                stroke-width="4"
+                stroke-linecap="round"
+                cx="60" cy="60" r="54"
+                fill="transparent"></circle>
+        </svg>
+
+        <div class="text-center z-10 flex flex-col items-center">
+            <div class="text-6xl font-bold tracking-tighter text-white" id="daysCount">0</div>
+            <div class="text-sm font-medium text-soft mt-1">Days</div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6 mt-8 w-full max-w-sm text-center">
+        <div>
+            <div class="text-2xl font-semibold text-gray-300" id="hoursCount">00</div>
+            <div class="text-xs text-soft uppercase tracking-wider">Hours</div>
+        </div>
+        <div>
+            <div class="text-2xl font-semibold text-gray-300" id="minutesCount">00</div>
+            <div class="text-xs text-soft uppercase tracking-wider">Minutes</div>
+        </div>
+        <div>
+            <div class="text-2xl font-semibold text-gray-300" id="secondsCount">00</div>
+            <div class="text-xs text-soft uppercase tracking-wider">Seconds</div>
+        </div>
+    </div>
+    
+    <div class="w-full mt-8 flex justify-center gap-4">
+        <button onclick="openUrgeSurfer()" 
+            class="flex-1 bg-royal text-white hover:bg-purple-700 
+            font-semibold py-3 px-6 rounded-2xl transition 
+            flex justify-center items-center gap-2 
+            shadow-lg shadow-royal/40">
+            <i class="fa-solid fa-fire text-spiritual"></i> Emergency
+        </button>
+    </div>
+</section>
+
+<!-- QUOTE -->
+<section class="glass-panel rounded-3xl p-8 relative">
+    <i class="fa-solid fa-quote-left text-3xl text-royal/40 absolute top-6 left-6"></i>
+    <div class="pl-8">
+        <p id="dailyQuote" class="font-serif text-lg text-gray-200 leading-relaxed italic mb-4"></p>
+        <p id="quoteAuthor" class="text-sm font-semibold text-spiritual uppercase tracking-wide"></p>
+    </div>
+    <button onclick="newQuote()" class="absolute bottom-6 right-6 text-soft hover:text-white transition">
+        <i class="fa-solid fa-rotate-right"></i>
+    </button>
+</section>
+
+<!-- MILESTONES -->
+<section class="mb-8">
+    <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+        <i class="fa-solid fa-seedling text-spiritual"></i> Journey of the Seed
+    </h3>
+
+    <div class="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-royal before:to-spiritual">
+
+        <!-- Day 7 -->
+        <div class="relative flex items-center group" id="ms-7">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-lab bg-white/10 text-soft shadow z-10 transition-colors duration-300">
+                <i class="fa-solid fa-check text-sm"></i>
+            </div>
+            <div class="ml-6 w-full glass-panel p-4 rounded-2xl opacity-70">
+                <h4 class="font-bold text-white">Day 7: Testosterone Spike</h4>
+                <p class="text-sm text-gray-400">Energy increases. Mental sharpness improves.</p>
+            </div>
+        </div>
+
+        <!-- Day 30 -->
+        <div class="relative flex items-center group" id="ms-30">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-lab bg-white/10 text-soft shadow z-10">
+                <i class="fa-solid fa-lock text-sm"></i>
+            </div>
+            <div class="ml-6 w-full glass-panel p-4 rounded-2xl opacity-70">
+                <h4 class="font-bold text-white">Day 30: Mental Clarity</h4>
+                <p class="text-sm text-gray-400">Confidence, emotional stability, sharper thinking.</p>
+            </div>
+        </div>
+
+        <!-- Day 90 -->
+        <div class="relative flex items-center group" id="ms-90">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-lab bg-white/10 text-soft shadow z-10">
+                <i class="fa-solid fa-star text-sm"></i>
+            </div>
+            <div class="ml-6 w-full glass-panel p-4 rounded-2xl opacity-70">
+                <h4 class="font-bold text-white">Day 90: Ojas Cultivation</h4>
+                <p class="text-sm text-gray-400">Deep spiritual magnetism and mental dominance.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+<script>
+let journeyStart = new Date();
+journeyStart.setDate(journeyStart.getDate() - 5);
+journeyStart.setHours(journeyStart.getHours() - 4);
+
+const goalDays = 90;
+
+const quotes = [
+    { text: "The chaste brain has tremendous energy.", author: "Swami Vivekananda" },
+    { text: "By the establishment of continence, energy is gained.", author: "Patanjali" },
+    { text: "He who controls the senses attains peace.", author: "Bhagavad Gita" }
+];
+
+function updateTimer() {
+    const now = new Date();
+    const diff = now - journeyStart;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / 1000 / 60) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    daysCount.innerText = days;
+    hoursCount.innerText = String(hours).padStart(2, '0');
+    minutesCount.innerText = String(minutes).padStart(2, '0');
+    secondsCount.innerText = String(seconds).padStart(2, '0');
+
+    updateProgress(days);
+    updateMilestones(days);
+}
+
+function updateProgress(days) {
+    const circle = document.getElementById('progressRing');
+    const radius = circle.r.baseVal.value;
+    const circumference = radius * 2 * Math.PI;
+
+    circle.style.strokeDasharray = circumference;
+    const percent = Math.min((days / goalDays) * 100, 100);
+    const offset = circumference - percent / 100 * circumference;
+    circle.style.strokeDashoffset = offset;
+}
+
+function updateMilestones(days) {
+    const milestones = [
+        { id: 'ms-7', req: 7 },
+        { id: 'ms-30', req: 30 },
+        { id: 'ms-90', req: 90 }
+    ];
+
+    milestones.forEach(ms => {
+        const el = document.getElementById(ms.id);
+        const iconContainer = el.querySelector('div:first-child');
+        const content = el.querySelector('div:nth-child(2)');
+
+        if (days >= ms.req) {
+            iconContainer.classList.remove('bg-white/10', 'text-soft');
+            iconContainer.classList.add('bg-royal', 'text-white');
+            content.classList.remove('opacity-70');
+        } else {
+            iconContainer.classList.add('bg-white/10', 'text-soft');
+            iconContainer.classList.remove('bg-royal', 'text-white');
+            content.classList.add('opacity-70');
+        }
+    });
+}
+
+function newQuote() {
+    const random = quotes[Math.floor(Math.random() * quotes.length)];
+    dailyQuote.innerText = `"${random.text}"`;
+    quoteAuthor.innerText = `— ${random.author}`;
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
+newQuote();
+</script>
+
+</body>
+</html>
