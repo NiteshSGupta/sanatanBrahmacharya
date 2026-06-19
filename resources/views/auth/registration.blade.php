@@ -57,6 +57,14 @@
           transform: rotate(360deg);
         }
       }
+
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
     </style>
   </head>
 
@@ -132,9 +140,9 @@
                 class="hidden peer"
               />
               <div
-                class="py-3 text-center rounded-xl border border-gray-300 peer-checked:bg-saffron-500 peer-checked:text-white peer-checked:border-saffron-500 transition"
+                class="py-3 flex items-center justify-center gap-2 rounded-xl border border-gray-200 peer-checked:bg-saffron-600 peer-checked:text-white peer-checked:border-saffron-600 transition"
               >
-                Male
+                <i class="fa-solid fa-mars text-lg"></i> Male
               </div>
             </label>
 
@@ -146,11 +154,39 @@
                 class="hidden peer"
               />
               <div
-                class="py-3 text-center rounded-xl border border-gray-300 peer-checked:bg-saffron-500 peer-checked:text-white peer-checked:border-saffron-500 transition"
+                class="py-3 flex items-center justify-center gap-2 rounded-xl border border-gray-200 peer-checked:bg-saffron-600 peer-checked:text-white peer-checked:border-saffron-600 transition"
               >
-                Female
+                <i class="fa-solid fa-venus text-lg"></i> Female
               </div>
             </label>
+          </div>
+        </div>
+
+        <!-- Age -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Age</label
+          >
+          <div class="relative w-full rounded-2xl border border-gray-100 bg-white/50 px-1">
+            <!-- Fade overlays for sides -->
+            <div class="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-white to-transparent pointer-events-none rounded-l-2xl z-10"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent pointer-events-none rounded-r-2xl z-10"></div>
+            
+            <div class="flex overflow-x-auto hide-scrollbar py-4 px-4 gap-3 snap-x snap-mandatory relative z-0">
+              @for($i = 16; $i <= 40; $i++)
+              <label class="relative flex-none cursor-pointer snap-center group">
+                <input type="radio" name="age" value="{{ $i }}" class="hidden peer" {{ $i == 20 ? 'checked' : '' }} />
+                <div class="w-14 h-14 flex items-center justify-center text-xl text-gray-500 font-medium rounded-2xl peer-checked:bg-saffron-600 peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-saffron-200 transition-all duration-300">
+                  {{ $i }}
+                </div>
+                <!-- Indicators -->
+                <div class="absolute -bottom-3 left-0 w-full flex justify-center items-center h-4">
+                  <div class="w-1 h-1 rounded-full bg-gray-300 peer-checked:hidden transition-all duration-300"></div>
+                  <div class="hidden peer-checked:block w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[8px] border-b-saffron-600"></div>
+                </div>
+              </label>
+              @endfor
+            </div>
           </div>
         </div>
 
@@ -166,18 +202,48 @@
             <input
               type="password"
               placeholder="Create a password"
-              class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition"
+              class="w-full pl-10 pr-10 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition"
             />
+            <button type="button" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+              <i class="fa-solid fa-eye-slash text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Confirm Password</label
+          >
+          <div class="relative">
+            <i
+              class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+            ></i>
+            <input
+              type="password"
+              placeholder="Confirm your password"
+              class="w-full pl-10 pr-10 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition"
+            />
+            <button type="button" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+              <i class="fa-solid fa-eye-slash text-sm"></i>
+            </button>
           </div>
         </div>
 
         <!-- Button -->
         <button
           type="submit"
-          class="w-full bg-saffron-600 text-white font-semibold py-3 rounded-xl hover:bg-saffron-700 transition shadow-lg shadow-saffron-200"
+          class="w-full bg-saffron-600 text-white font-semibold py-3 rounded-xl hover:bg-saffron-700 transition shadow-lg shadow-saffron-200 mt-2"
         >
           Register
         </button>
+
+        <!-- Login Link -->
+        <div class="text-center mt-6">
+          <p class="text-gray-500 text-sm">
+            Already have an account? <a href="{{ route('login') ?? '#' }}" class="text-saffron-600 font-semibold hover:underline">Log in</a>
+          </p>
+        </div>
       </form>
 
       <!-- Footer -->

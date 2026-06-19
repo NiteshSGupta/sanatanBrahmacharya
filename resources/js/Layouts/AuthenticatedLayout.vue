@@ -34,7 +34,7 @@ const user = usePage().props.auth.user;
         </main>
 
         <!-- Bottom Navigation -->
-        <div class="fixed bottom-0 left-0 w-full z-40">
+        <div class="fixed bottom-0 left-0 w-full z-40 bg-gradient-to-t from-[#fcfbf9] via-[#fcfbf9] to-transparent pt-8">
             <div class="max-w-2xl mx-auto px-4 pb-[env(safe-area-inset-bottom)]">
                 <div class="glass-panel rounded-3xl mb-4 px-6 py-3 flex justify-around items-center shadow-xl border border-white/40 relative overflow-hidden">
                     

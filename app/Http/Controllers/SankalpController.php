@@ -37,20 +37,23 @@ class SankalpController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
+            'titles' => 'required|array|min:1',
+            'titles.*' => 'required|string|max:255',
             'duration_days' => 'required|integer|in:7,21,40,90',
         ]);
 
         $user = $request->user();
 
-        $user->sankalps()->create([
-            'title' => $request->title,
-            'duration_days' => $request->duration_days,
-            'start_date' => Carbon::today(),
-            'is_active' => true,
-        ]);
+        foreach ($request->titles as $title) {
+            $user->sankalps()->create([
+                'title' => $title,
+                'duration_days' => $request->duration_days,
+                'start_date' => Carbon::today(),
+                'is_active' => true,
+            ]);
+        }
 
-        return redirect()->route('dincharya')->with('success', 'Sankalp created successfully!');
+        return redirect()->route('dincharya')->with('success', 'Sankalps created successfully!');
     }
 
     public function checkin(Request $request, Sankalp $sankalp)

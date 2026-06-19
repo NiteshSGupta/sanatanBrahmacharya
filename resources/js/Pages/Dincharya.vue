@@ -11,7 +11,7 @@ const props = defineProps({
 });
 
 const isSankalpModalOpen = ref(false);
-const selectedSankalp = ref("");
+const selectedSankalps = ref([]);
 const customSankalp = ref("");
 const selectedDuration = ref(0);
 
@@ -25,9 +25,13 @@ const sankalpOptions = [
 
 const durations = [7, 21, 40, 90];
 
-const selectSankalp = (val) => {
-    selectedSankalp.value = val;
-    customSankalp.value = "";
+const toggleSankalp = (val) => {
+    const index = selectedSankalps.value.indexOf(val);
+    if (index > -1) {
+        selectedSankalps.value.splice(index, 1);
+    } else {
+        selectedSankalps.value.push(val);
+    }
 };
 
 const selectDuration = (days) => {
@@ -35,16 +39,21 @@ const selectDuration = (days) => {
 };
 
 const sankalpForm = useForm({
-    title: '',
+    titles: [],
     duration_days: 0
 });
 
 const sealSankalp = () => {
-    sankalpForm.title = customSankalp.value || selectedSankalp.value;
+    const finalTitles = [...selectedSankalps.value];
+    if (customSankalp.value.trim() !== '') {
+        finalTitles.push(customSankalp.value.trim());
+    }
+    
+    sankalpForm.titles = finalTitles;
     sankalpForm.duration_days = selectedDuration.value;
     
-    if (!sankalpForm.title || !sankalpForm.duration_days) {
-        alert("Please select a sankalp and duration.");
+    if (sankalpForm.titles.length === 0 || !sankalpForm.duration_days) {
+        alert("Please select at least one task and a duration.");
         return;
     }
     
@@ -52,7 +61,7 @@ const sealSankalp = () => {
         onSuccess: () => {
             isSankalpModalOpen.value = false;
             sankalpForm.reset();
-            selectedSankalp.value = "";
+            selectedSankalps.value = [];
             customSankalp.value = "";
             selectedDuration.value = 0;
         }
@@ -295,10 +304,11 @@ const isChecked = (sankalp, dateStr) => {
                 <div class="space-y-3 mb-6">
                     <button
                         v-for="opt in sankalpOptions" :key="opt.value"
-                        @click="selectSankalp(opt.value)"
-                        :class="['w-full text-left px-4 py-4 rounded-2xl border transition', selectedSankalp === opt.value && !customSankalp ? 'border-saffron-500 bg-saffron-50 text-saffron-900 shadow-sm' : 'border-gray-200 text-gray-700 hover:border-saffron-400']"
+                        @click="toggleSankalp(opt.value)"
+                        :class="['w-full text-left px-4 py-4 rounded-2xl border transition flex items-center justify-between', selectedSankalps.includes(opt.value) ? 'border-saffron-500 bg-saffron-50 text-saffron-900 shadow-sm' : 'border-gray-200 text-gray-700 hover:border-saffron-400']"
                     >
-                        {{ opt.text }}
+                        <span>{{ opt.text }}</span>
+                        <i v-if="selectedSankalps.includes(opt.value)" class="fa-solid fa-check-circle text-saffron-500"></i>
                     </button>
                 </div>
 
@@ -309,7 +319,6 @@ const isChecked = (sankalp, dateStr) => {
                     <input
                         type="text"
                         v-model="customSankalp"
-                        @input="selectedSankalp = ''"
                         placeholder="Or write your own custom task..."
                         class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none text-gray-800 transition"
                     />

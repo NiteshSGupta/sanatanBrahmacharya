@@ -152,6 +152,44 @@
       let selectedSankalp = "";
       let selectedDays = 0;
 
+// --- API Configuration ---
+      const API_BASE_URL = "{{ config('services.central_server.url') }}/api";
+
+      async function syncWithServer() {
+        // Generate or get a unique device ID for this browser
+        let deviceUuid = localStorage.getItem("device_uuid");
+        if (!deviceUuid) {
+            deviceUuid = "web-" + Math.random().toString(36).substring(2, 15);
+            localStorage.setItem("device_uuid", deviceUuid);
+        }
+
+        const sankalpData = JSON.parse(localStorage.getItem("ojas_sankalp") || "{}");
+        const todayDate = new Date().toISOString().split('T')[0];
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/sync`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    uuid: deviceUuid,
+                    date: todayDate,
+                    device_info: "Browser testing - " + navigator.platform,
+                    sync_data: {
+                        active_sankalp: sankalpData,
+                        last_sync_time: new Date().toISOString()
+                    }
+                })
+            });
+            const data = await response.json();
+            console.log("Successfully synced with main server:", data);
+        } catch (error) {
+            console.error("Sync failed (Server might be unreachable):", error);
+        }
+      }
+
         function closeSettings() {
         const modal = document.getElementById("settingsModal");
         const content = document.getElementById("settingsContent");
@@ -284,6 +322,9 @@
             start: new Date(),
           }),
         );
+
+        // Sync data to the central server
+        syncWithServer();
 
         closeSankalp();
       }

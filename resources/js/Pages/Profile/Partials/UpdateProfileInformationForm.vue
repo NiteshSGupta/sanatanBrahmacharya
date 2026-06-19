@@ -16,6 +16,8 @@ const user = usePage().props.auth.user;
 const form = useForm({
     name: user.name,
     username: user.username,
+    gender: user.gender,
+    age: user.age,
 });
 </script>
 
@@ -64,6 +66,38 @@ const form = useForm({
                 />
 
                 <InputError class="mt-2" :message="form.errors.username" />
+            </div>
+
+            <div>
+                <InputLabel for="gender" value="Gender" />
+
+                <select
+                    id="gender"
+                    class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                    v-model="form.gender"
+                    required
+                >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+
+                <InputError class="mt-2" :message="form.errors.gender" />
+            </div>
+
+            <div>
+                <InputLabel for="age" value="Age" />
+
+                <TextInput
+                    id="age"
+                    type="number"
+                    class="mt-1 block w-full"
+                    v-model="form.age"
+                    required
+                    min="1"
+                    max="120"
+                />
+
+                <InputError class="mt-2" :message="form.errors.age" />
             </div>
 
             <div class="flex items-center gap-4">

@@ -16,10 +16,26 @@ createInertiaApp({
             import.meta.glob('./Pages/**/*.vue'),
         ),
     setup({ el, App, props, plugin }) {
-        return createApp({ render: () => h(App, props) })
+        const mountedApp = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
             .mount(el);
+
+        // Fade out CSS splash screen once app is mounted and ready
+        setTimeout(() => {
+            const splash = document.getElementById('css-splash');
+            if (splash) {
+                splash.classList.add('fade-out');
+                setTimeout(() => splash.remove(), 300); // Remove from DOM after transition
+            }
+            
+            // Hide native Android splash screen if we are in the mobile app
+            if (window.AndroidBridge && window.AndroidBridge.hideSplash) {
+                window.AndroidBridge.hideSplash();
+            }
+        }, 150);
+
+        return mountedApp;
     },
     progress: {
         color: '#4B5563',

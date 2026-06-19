@@ -1,11 +1,9 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 defineProps({
-    canResetPassword: {
-        type: Boolean,
-    },
     status: {
         type: String,
     },
@@ -22,6 +20,8 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
+const showPassword = ref(false);
 </script>
 
 <template>
@@ -77,13 +77,16 @@ const submit = () => {
                     <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                     <input
                         id="password"
-                        type="password"
+                        :type="showPassword ? 'text' : 'password'"
                         v-model="form.password"
                         placeholder="Enter your password"
-                        class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition"
+                        class="w-full pl-10 pr-10 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition"
                         required
                         autocomplete="current-password"
                     />
+                    <button type="button" @click="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                        <i class="fa-solid text-sm" :class="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                    </button>
                 </div>
                 <div v-if="form.errors.password" class="text-red-500 text-xs mt-1">{{ form.errors.password }}</div>
             </div>
@@ -93,10 +96,6 @@ const submit = () => {
                     <input type="checkbox" v-model="form.remember" class="rounded text-saffron-600 focus:ring-saffron-500 border-gray-300 mr-2">
                     Remember me
                 </label>
-
-                <Link v-if="canResetPassword" :href="route('password.request')" class="text-sm text-saffron-600 hover:text-saffron-700 transition">
-                    Forgot Password?
-                </Link>
             </div>
 
             <!-- Login Button -->

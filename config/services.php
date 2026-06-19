@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'central_server' => [
+        'url' => env('CENTRAL_SERVER_URL', 'https://brahmacharyapath.com'),
+    ],
+
 ];
